@@ -8,6 +8,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import java.util.Calendar;
 
+/* Author: Sandra Dai
+ * Testing merging
+ */
+
 public class CheckEventInput {
     private EditText title;
     private EditText location;
@@ -56,15 +60,20 @@ public class CheckEventInput {
         }
         return true;
     }
+
+    /* Check for valid date
+     * Cannot enter date that has already passed
+     */
     public boolean confirmDate() {
         Calendar cal = Calendar.getInstance();
 
+        /* For Debugging
         System.out.println("Date.year: "+date.getYear());
         System.out.println("Calendar.year: "+cal.get(Calendar.YEAR));
         System.out.println("Date.month: "+date.getMonth());
         System.out.println("Calendar.month: "+cal.get(Calendar.MONTH));
         System.out.println("Date.day: "+date.getDayOfMonth());
-        System.out.println("Calendar.day: "+cal.get(Calendar.DAY_OF_MONTH));
+        System.out.println("Calendar.day: "+cal.get(Calendar.DAY_OF_MONTH));*/
 
         if( date.getYear() < cal.get(Calendar.YEAR) ) {
             return false;
@@ -74,6 +83,9 @@ public class CheckEventInput {
             return false;
         }
 
+        /* If month inputted is same as current month, check if inputted day occurs before
+         * current day -- if so, return false (date is invalid), else return true
+         */
         return !(date.getMonth() == cal.get(Calendar.MONTH) &&
                 date.getDayOfMonth() < cal.get(Calendar.DAY_OF_MONTH));
 
