@@ -8,6 +8,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import java.util.Calendar;
 
+/* Author: Sandra Dai
+ * File:   CheckEventInput.java
+ * Contains methods to validate user-input when creating/editing an event
+ */
+
 public class CheckEventInput {
     private EditText title;
     private EditText location;
@@ -28,11 +33,15 @@ public class CheckEventInput {
 
     /* Error Checking Methods */
 
+    /* Title is required and must be unique */
     public boolean confirmTitle() {
-        if( title.getText().toString().matches("") ) {
+        
+        // Ensure non-empty
+        if( title.getText().toString().matches("") ) {  
             return false;
         }
 
+        // Ensure unique
         ParseQuery<Event> query = ParseQuery.getQuery("Event");
         query.whereEqualTo("Title", title.getText().toString());
         int count;
@@ -43,10 +52,16 @@ public class CheckEventInput {
         }
         return count <= 0;
     }
+    
+    /* Location is required */
     public boolean confirmLocation() {
         return !location.getText().toString().matches("");
     }
+    
+    /* Contact information must be specified */
     public boolean confirmContact() {
+        
+        // Checks for basic features of an email: "@", at least 3 characters (i.e. a@b )
         if( ParseUser.getCurrentUser().getEmail() == null ){
             if(email.getText().toString().matches("") ||
                     (email.getText().toString().length() < 3) ||
@@ -56,6 +71,7 @@ public class CheckEventInput {
         }
         return true;
     }
+    
     public boolean confirmDate() {
         Calendar cal = Calendar.getInstance();
 
